@@ -5,12 +5,12 @@ import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { collection, query, where, onSnapshot, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { Category, Transaction } from '@/models/types';
+import { Category, Expense } from '@/models/types';
 
 interface CategoryWithStats extends Category {
   monthlyTotal: number;
   previousMonthTotal: number;
-  transactions: Transaction[];
+  transactions: Expense[];
 }
 
 const TransactionCategories = () => {
@@ -58,7 +58,7 @@ const TransactionCategories = () => {
               id: doc.id,
               ...doc.data(),
               date: new Date(doc.data().date),
-            })) as Transaction[];
+            })) as Expense[];
 
             // Calculate totals for each category
             const categoriesWithStats = categoriesData.map(category => {
